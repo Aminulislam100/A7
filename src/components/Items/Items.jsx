@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Items = () => {
   const [items, setItems] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [disabledHearts, setDisabledHearts] = useState({});
-  const [notification, setNotification] = useState(null);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     fetch('/items.json')
@@ -18,73 +18,23 @@ const Items = () => {
       setFavorites([...favorites, { ...item }]);
       setDisabledHearts({ ...disabledHearts, [item.id]: true });
 
-      setNotification('🦄 Item added to your Favorite List');
-      setProgress(100);
-
-      let start = Date.now();
-      const duration = 3000;
-
-      const interval = setInterval(() => {
-        const elapsed = Date.now() - start;
-        const newProgress = 100 - (elapsed / duration) * 100;
-        setProgress(Math.max(0, newProgress));
-
-        if (elapsed >= duration) {
-          clearInterval(interval);
-          setNotification(null);
-          setProgress(0);
-        }
-      }, 30);
+      toast.success('🦄 Item added to your Favorite List');
     }
   };
 
   const handleRemoveFavorite = (id) => {
     setFavorites(favorites.filter(item => item.id !== id));
     setDisabledHearts({ ...disabledHearts, [id]: false });
-    
-    setNotification('⚠🦄 Item removed from your Favorite List');
-    setProgress(100);
 
-    let start = Date.now();
-    const duration = 3000;
-
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - start;
-      const newProgress = 100 - (elapsed / duration) * 100;
-      setProgress(Math.max(0, newProgress));
-
-      if (elapsed >= duration) {
-        clearInterval(interval);
-        setNotification(null);
-        setProgress(0);
-      }
-    }, 30);
+    toast.error('⚠️ Item removed from your Favorite List');
   };
 
   const totalBid = favorites.reduce((total, item) => total + item.currentBidPrice, 0);
 
   return (
     <div className="relative">
-
-      {notification && (
-        <div className="fixed top-5 right-5 bg-white border border-gray-300 shadow-md px-4 py-2 rounded-md text-sm text-gray-800 z-50 w-80">
-          <div className="flex justify-between items-center">
-            <p>{notification}</p>
-            <button
-              onClick={() => setNotification(null)}
-              className="text-xl font-semibold cursor-pointer"
-            >
-              x
-            </button>
-          </div>
-          <div className="w-full h-1 mt-2 bg-gray-200 rounded">
-            <div
-              className="h-full bg-blue-500 rounded transition-all duration-100"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-      )}
+      {/* Toast Container */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnHover />
 
       <div className="flex mt-40 mx-20 gap-10 items-start">
         <div className="w-[60%] border-2 p-4 rounded-2xl">
