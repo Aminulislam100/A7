@@ -33,7 +33,6 @@ const Items = () => {
 
   return (
     <div className="relative">
-      {/* Toast Container */}
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnHover />
 
       <div className="flex mt-40 mx-20 gap-10 items-start">
