@@ -54,7 +54,7 @@ const Items = () => {
             {items.map(item => (
               <div key={item.id} className="border-b-2 navbar bg-base-100 shadow-sm p-4 flex justify-between items-center rounded-lg">
                 <div className="flex items-center gap-4">
-                  <img src={item.image} alt={item.title} className="w-24 h-24 object-cover rounded" />
+                  <img src={item.image} className="w-24 h-24 object-cover rounded" />
                   <div>
                     <h3 className="text-lg font-semibold">{item.title}</h3>
                     <p className="text-sm text-gray-500">{item.description}</p>
@@ -96,7 +96,7 @@ const Items = () => {
                 <div key={item.id} className="flex flex-col gap-3 border p-3 rounded-lg shadow-sm">
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-4">
-                      <img src={item.image} alt={item.title} className="w-16 h-16 rounded object-cover" />
+                      <img src={item.image} className="w-16 h-16 rounded object-cover" />
                       <div>
                         <h3 className="font-semibold">{item.title}</h3>
                         <div className="flex gap-8">
